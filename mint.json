@@ -18,11 +18,7 @@
   "navigation": [
     {
       "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoints/get",
-        "api-reference/endpoints/create",
-        "api-reference/endpoints/delete"
-      ]
+      "pages": ["endpoints/get", "endpoints/create", "endpoints/delete"]
     }
   ]
 }
