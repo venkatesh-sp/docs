@@ -23,13 +23,13 @@
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoints/api-keys/get",
-        "api-reference/endpoints/api-keys/create",
-        "api-reference/endpoints/api-keys/[api-key-id]/get",
-        "api-reference/endpoints/api-keys/[api-key-id]/update",
-        "api-reference/endpoints/api-keys/[api-key-id]/delete",
-        "api-reference/endpoints/hospitals/get",
-        "api-reference/endpoints/beds/get"
+        "api-reference/endpoint/api-keys/get",
+        "api-reference/endpoint/api-keys/create",
+        "api-reference/endpoint/api-keys/[api-key-id]/get",
+        "api-reference/endpoint/api-keys/[api-key-id]/update",
+        "api-reference/endpoint/api-keys/[api-key-id]/delete",
+        "api-reference/endpoint/hospitals/get",
+        "api-reference/endpoint/beds/get"
       ]
     }
   ]
