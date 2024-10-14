@@ -19,29 +19,18 @@
     }
   ],
   "paths": {
-    "/fhir/hospitals": {
+    "/hospitals": {
       "get": {
-        "description": "Returns all hospitals from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "description": "Fetches the list of hospitals associated with the user, including departments.",
         "responses": {
           "200": {
-            "description": "Hospital response",
+            "description": "List of hospitals with their associated departments.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Hospital"
+                    "$ref": "#/components/schemas/HospitalWithDepartments"
                   }
                 }
               }
@@ -60,15 +49,15 @@
         }
       }
     },
-    "/fhir/beds": {
+    "/beds": {
       "post": {
-        "description": "Filters Beds in the system",
+        "description": "Filters beds based on department, hospital, bed ID, and other criteria.",
         "requestBody": {
-          "description": "Filter Beds from the system",
+          "description": "Filtering criteria for beds.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FilterBed"
+                "$ref": "#/components/schemas/FilterBedRequest"
               }
             }
           },
@@ -76,20 +65,52 @@
         },
         "responses": {
           "200": {
-            "description": "Filtered bed list",
+            "description": "Filtered list of beds",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Bed"
+                    "$ref": "#/components/schemas/BedWithDetails"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the status of a specific bed and triggers related activities and notifications.",
+        "requestBody": {
+          "description": "Bed status update payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBedStatusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Bed status successfully updated.",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -256,6 +277,13 @@
   },
   "components": {
     "schemas": {
+      "NewFHIRAPIKey": {
+        "type": "object",
+        "properties": {
+          "user_id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" }
+        }
+      },
       "Bed": {
         "type": "object",
         "properties": {
@@ -273,6 +301,104 @@
           "created_at": { "type": "string", "format": "date-time" },
           "updated_at": { "type": "string", "format": "date-time" },
           "isDeleted": { "type": "boolean" }
+        }
+      },
+      "HospitalWithDepartments": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "phone": { "type": "string" },
+          "address": { "type": "string" },
+          "departments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Department"
+            }
+          }
+        }
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" }
+        }
+      },
+      "FilterBedRequest": {
+        "type": "object",
+        "properties": {
+          "department": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "hospital": { "type": "string", "format": "uuid", "nullable": true },
+          "limit": { "type": "integer", "format": "int32", "nullable": true },
+          "page": { "type": "integer", "format": "int32", "nullable": true },
+          "bed_id": { "type": "string", "format": "uuid", "nullable": true },
+          "bed_number": { "type": "string", "nullable": true }
+        }
+      },
+      "BedWithDetails": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "bedNumber": { "type": "string" },
+          "hospital": {
+            "$ref": "#/components/schemas/Hospital"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BedStatus"
+          },
+          "bedType": {
+            "$ref": "#/components/schemas/BedType"
+          },
+          "isLicensed": { "type": "boolean" },
+          "isStaffed": { "type": "boolean" },
+          "physicalAvailable": { "type": "boolean" },
+          "isConnected": { "type": "boolean" }
+        }
+      },
+      "UpdateBedStatusRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The ID of the bed to update."
+          },
+          "managingOrganization": {
+            "type": "object",
+            "properties": {
+              "reference": {
+                "type": "string",
+                "example": "Hospital/{hospital_id}"
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "The new status identifier for the bed."
+          }
+        }
+      },
+      "BedStatus": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" }
+        }
+      },
+      "BedType": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" }
         }
       },
       "Hospital": {
