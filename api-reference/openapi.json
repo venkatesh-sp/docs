@@ -30,7 +30,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/HospitalWithDepartments"
+                    "$ref": "#/components/schemas/Hospital"
                   }
                 }
               }
@@ -57,7 +57,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FilterBedRequest"
+                "$ref": "#/components/schemas/FilterBedsPayload"
               }
             }
           },
@@ -158,7 +158,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewFHIRAPIKey"
+                "$ref": "#/components/schemas/FHIRAPIKeyPayload"
               }
             }
           },
@@ -277,7 +277,7 @@
   },
   "components": {
     "schemas": {
-      "NewFHIRAPIKey": {
+      "FHIRAPIKeyPayload": {
         "type": "object",
         "properties": {
           "user_id": { "type": "string", "format": "uuid" },
@@ -303,22 +303,6 @@
           "isDeleted": { "type": "boolean" }
         }
       },
-      "HospitalWithDepartments": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "name": { "type": "string" },
-          "description": { "type": "string" },
-          "phone": { "type": "string" },
-          "address": { "type": "string" },
-          "departments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Department"
-            }
-          }
-        }
-      },
       "Department": {
         "type": "object",
         "properties": {
@@ -326,7 +310,7 @@
           "name": { "type": "string" }
         }
       },
-      "FilterBedRequest": {
+      "FilterBedsPayload": {
         "type": "object",
         "properties": {
           "department": {
@@ -423,7 +407,13 @@
           "rating": { "type": "string" },
           "created_at": { "type": "string", "format": "date-time" },
           "updated_at": { "type": "string", "format": "date-time" },
-          "isDeleted": { "type": "boolean" }
+          "isDeleted": { "type": "boolean" },
+          "departments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Department"
+            }
+          }
         }
       },
       "EhrApiKey": {
