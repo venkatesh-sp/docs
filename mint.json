@@ -17,6 +17,12 @@
   },
   "navigation": [
     {
+      "group": "API Documentation",
+      "pages": [
+        "introduction"
+      ]
+    },
+    {
       "group": "Endpoint Examples",
       "pages": [
         "endpoints/api-keys/get",
