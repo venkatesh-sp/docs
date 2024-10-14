@@ -15,27 +15,13 @@
       "to": "#07C983"
     }
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
   "navigation": [
-    {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
-    },
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoints/get",
+        "api-reference/endpoints/create",
+        "api-reference/endpoints/delete"
       ]
     }
   ]
