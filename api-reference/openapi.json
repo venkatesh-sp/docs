@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/hospitals": {
+    "/fhir/hospitals": {
       "get": {
         "description": "Fetches the list of hospitals associated with the user, including departments.",
         "responses": {
@@ -49,7 +49,7 @@
         }
       }
     },
-    "/beds": {
+    "/fhir/beds": {
       "post": {
         "description": "Filters beds based on department, hospital, bed ID, and other criteria.",
         "requestBody": {
