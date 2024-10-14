@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "OpenAPI CareCapacity",
+    "description": "CareCapacity API Documentation",
     "license": {
       "name": "MIT"
     },
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "servers": [
     {
@@ -19,9 +19,9 @@
     }
   ],
   "paths": {
-    "/plants": {
+    "/fhir/hospitals": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "description": "Returns all hospitals from the system that the user has access to",
         "parameters": [
           {
             "name": "limit",
@@ -35,13 +35,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Hospital response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Plant"
+                    "$ref": "#/components/schemas/Hospital"
                   }
                 }
               }
@@ -58,15 +58,17 @@
             }
           }
         }
-      },
+      }
+    },
+    "/fhir/beds": {
       "post": {
-        "description": "Creates a new plant in the store",
+        "description": "Filters Beds in the system",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "description": "Filter Beds from the system",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/FilterBed"
               }
             }
           },
@@ -74,11 +76,14 @@
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Filtered bed list",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bed"
+                  }
                 }
               }
             }
@@ -96,24 +101,143 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/ehr-api-keys": {
+      "get": {
+        "description": "List FHIR API Keys",
+        "responses": {
+          "200": {
+            "description": "FHIR API Keys List",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EhrApiKey"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create FHIR API Key",
+        "requestBody": {
+          "description": "Create FHIR API Key",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFHIRAPIKey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "FHIR API Key Created",
+            "content": {}
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ehr-api-keys/{api-key-id}": {
+      "get": {
+        "description": "Get FHIR API Key based on the ID supplied",
         "parameters": [
           {
-            "name": "id",
+            "name": "api-key-id",
             "in": "path",
-            "description": "ID of plant to delete",
+            "description": "ID of FHIR API Key",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FHIR API Key",
+            "content": {}
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Updates a FHIR API Key based on the ID supplied",
+        "parameters": [
+          {
+            "name": "api-key-id",
+            "in": "path",
+            "description": "ID of FHIR API Key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FHIR API Key updated",
+            "content": {}
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a FHIR API Key based on the ID supplied",
+        "parameters": [
+          {
+            "name": "api-key-id",
+            "in": "path",
+            "description": "ID of FHIR API Key to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Plant deleted",
+            "description": "FHIR API Key deleted",
             "content": {}
           },
           "400": {
@@ -132,48 +256,94 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "Bed": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
+          "id": { "type": "string", "format": "uuid" },
+          "roomNumber": { "type": "string" },
+          "bedNumber": { "type": "string" },
+          "isLicensed": { "type": "boolean" },
+          "isStaffed": { "type": "boolean" },
+          "physicalAvailable": { "type": "boolean" },
+          "isConnected": { "type": "boolean" },
+          "bedType": { "type": "string", "format": "uuid" },
+          "status": { "type": "string", "format": "uuid" },
+          "department": { "type": "string", "format": "uuid" },
+          "hospital": { "type": "string", "format": "uuid" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "isDeleted": { "type": "boolean" }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
+      "Hospital": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "identifier": { "type": "string" },
+          "phone": { "type": "string" },
+          "address": { "type": "string" },
+          "country": { "type": "string" },
+          "zipcode": { "type": "string" },
+          "state": { "type": "string" },
+          "latitude": { "type": "string" },
+          "longitude": { "type": "string" },
+          "primaryAdmin": { "type": "string", "format": "uuid" },
+          "hospitalType": { "type": "string", "format": "uuid" },
+          "ownership": { "type": "string", "format": "uuid" },
+          "emergencyServices": { "type": "boolean" },
+          "status": { "type": "boolean" },
+          "rating": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "isDeleted": { "type": "boolean" }
+        }
+      },
+      "EhrApiKey": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "apikey": { "type": "string" },
+          "description": { "type": "string" },
+          "user": { "type": "string", "format": "uuid" },
+          "status": { "type": "boolean" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "status": { "type": "boolean" },
+          "isAdmin": { "type": "boolean" },
+          "role": { "type": "string", "format": "uuid" },
+          "policies": { "type": "object" },
+          "subscriptions": { "type": "object" },
+          "isDeleted": { "type": "boolean" },
+          "googleId": { "type": "string" },
+          "microsoftId": { "type": "string" },
+          "magicLinkToken": { "type": "string" },
+          "password": { "type": "string" },
+          "passwordSetupToken": { "type": "string" },
+          "setPassword": { "type": "boolean" },
+          "termsStatus": { "type": "boolean" },
+          "lastLogin": { "type": "string" },
+          "lastLoginAt": { "type": "string", "format": "date-time" },
+          "lastLogoutAt": { "type": "string", "format": "date-time" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
       },
       "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
         "type": "object",
+        "required": ["error", "message"],
         "properties": {
           "error": {
             "type": "integer",
