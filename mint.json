@@ -18,7 +18,14 @@
   "navigation": [
     {
       "group": "Endpoint Examples",
-      "pages": ["endpoints/get", "endpoints/create", "endpoints/delete"]
+      "pages": [
+        "endpoints/api-keys/get",
+        "endpoints/api-keys/create",
+        "endpoints/api-keys/update",
+        "endpoints/api-keys/delete",
+        "endpoints/hospitals/get",
+        "endpoints/beds/get"
+      ]
     }
   ]
 }
