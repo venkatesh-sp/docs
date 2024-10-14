@@ -21,8 +21,9 @@
       "pages": [
         "endpoints/api-keys/get",
         "endpoints/api-keys/create",
-        "endpoints/api-keys/update",
-        "endpoints/api-keys/delete",
+        "endpoints/api-keys/[api-key-id]/get",
+        "endpoints/api-keys/[api-key-id]/update",
+        "endpoints/api-keys/[api-key-id]/delete",
         "endpoints/hospitals/get",
         "endpoints/beds/get"
       ]
