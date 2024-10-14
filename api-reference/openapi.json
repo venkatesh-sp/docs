@@ -199,7 +199,13 @@
         "responses": {
           "200": {
             "description": "FHIR API Key",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EhrApiKey"
+                }
+              }
+            }
           },
           "400": {
             "description": "unexpected error",
