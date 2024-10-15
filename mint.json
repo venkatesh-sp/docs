@@ -30,7 +30,7 @@
         {
           "group": "Beds",
           "pages": [
-            "api-reference/endpoint/beds/availabillity",
+            "api-reference/endpoint/beds/availability",
             "api-reference/endpoint/beds/search",
             "api-reference/endpoint/beds/update"
           ]
