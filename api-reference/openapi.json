@@ -20,7 +20,7 @@
   ],
   "security": [
     {
-      "anyOf": [{ "bearerAuth": [] }, { "x-api-key": [] }]
+      "anyOf": [{ "bearerAuth": [] }, { "apiKeyAuth": [] }]
     }
   ],
   "paths": {
@@ -528,7 +528,7 @@
         "type": "http",
         "scheme": "bearer"
       },
-      "x-api-key": {
+      "apiKeyAuth": {
         "type": "apiKey",
         "name": "x-api-key",
         "in": "header",
