@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "BCDA APP",
+  "name": "CareCapacity",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -23,13 +23,24 @@
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/api-keys/get",
-        "api-reference/endpoint/api-keys/create",
-        "api-reference/endpoint/api-keys/[api-key-id]/get",
-        "api-reference/endpoint/api-keys/[api-key-id]/update",
-        "api-reference/endpoint/api-keys/[api-key-id]/delete",
+        {
+          "group": "FHIR API Keys",
+          "pages": [
+            "api-reference/endpoint/api-keys/get",
+            "api-reference/endpoint/api-keys/create",
+            "api-reference/endpoint/api-keys/[api-key-id]/get",
+            "api-reference/endpoint/api-keys/[api-key-id]/update",
+            "api-reference/endpoint/api-keys/[api-key-id]/delete"
+          ]
+        },
         "api-reference/endpoint/hospitals/get",
-        "api-reference/endpoint/beds/get"
+        {
+          "group": "Beds",
+          "pages": [
+            "api-reference/endpoint/beds/post",
+            "api-reference/endpoint/beds/patch"
+          ]
+        }
       ]
     }
   ]
