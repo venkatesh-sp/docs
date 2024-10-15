@@ -18,11 +18,7 @@
       "description": "Staging server (uses test data)"
     }
   ],
-  "security": [
-    {
-      "anyOf": [{ "bearerAuth": [] }, { "apiKeyAuth": [] }]
-    }
-  ],
+  "security": [],
   "paths": {
     "/fhir/hospitals": {
       "get": {
