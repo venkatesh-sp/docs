@@ -21,6 +21,9 @@
   "security": [
     {
       "bearerAuth": []
+    },
+    {
+      "x-api-key": []
     }
   ],
   "paths": {
