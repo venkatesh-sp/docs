@@ -122,7 +122,7 @@
         }
       }
     },
-    "/fhir/beds/availabillity": {
+    "/fhir/beds/availability": {
       "post": {
         "description": "Search beds availability based on department, hospital, bed ID, and other criteria.",
         "requestBody": {
