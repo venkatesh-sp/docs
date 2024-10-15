@@ -20,8 +20,7 @@
   ],
   "security": [
     {
-      "bearerAuth": [],
-      "x-api-key": []
+      "anyOf": [{ "bearerAuth": [] }, { "x-api-key": [] }]
     }
   ],
   "paths": {
