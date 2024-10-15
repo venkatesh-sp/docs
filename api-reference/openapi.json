@@ -10,7 +10,12 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api.carecapacity.ai",
+      "description": "Production server (uses live data)"
+    },
+    {
+      "url": "https://staging-api.carecapacity.ai",
+      "description": "Staging server (uses test data)"
     }
   ],
   "security": [
@@ -522,6 +527,12 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      },
+      "x-api-key": {
+        "type": "string",
+        "name": "api-key-id",
+        "in": "header",
+        "description": "Prefix the value with \"x-api-key\" to indicate the custom authorization type"
       }
     }
   }
