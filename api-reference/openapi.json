@@ -532,7 +532,7 @@
         "scheme": "bearer"
       },
       "x-api-key": {
-        "type": "string",
+        "type": "apiKey",
         "name": "api-key-id",
         "in": "header",
         "description": "Prefix the value with \"x-api-key\" to indicate the custom authorization type"
