@@ -24,6 +24,18 @@
       "group": "Endpoint Examples",
       "pages": [
         {
+          "group": "Hospitals",
+          "pages": ["api-reference/endpoint/hospitals/get"]
+        },
+        {
+          "group": "Beds",
+          "pages": [
+            "api-reference/endpoint/beds/availabillity",
+            "api-reference/endpoint/beds/search",
+            "api-reference/endpoint/beds/update"
+          ]
+        },
+        {
           "group": "FHIR API Keys",
           "pages": [
             "api-reference/endpoint/api-keys/get",
@@ -31,15 +43,6 @@
             "api-reference/endpoint/api-keys/[api-key-id]/get",
             "api-reference/endpoint/api-keys/[api-key-id]/update",
             "api-reference/endpoint/api-keys/[api-key-id]/delete"
-          ]
-        },
-        "api-reference/endpoint/hospitals/get",
-        {
-          "group": "Beds",
-          "pages": [
-            "api-reference/endpoint/beds/availabillity",
-            "api-reference/endpoint/beds/search",
-            "api-reference/endpoint/beds/update"
           ]
         }
       ]

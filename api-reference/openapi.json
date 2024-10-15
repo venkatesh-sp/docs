@@ -51,9 +51,9 @@
     },
     "/fhir/beds": {
       "post": {
-        "description": "Filters beds based on department, hospital, bed ID, and other criteria.",
+        "description": "Search beds based on department, hospital, bed ID, and other criteria.",
         "requestBody": {
-          "description": "Filtering criteria for beds.",
+          "description": "Search criteria for beds.",
           "content": {
             "application/json": {
               "schema": {
@@ -107,6 +107,47 @@
             "description": "Bed status successfully updated.",
             "content": {
               "application/json": {}
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fhir/beds/availabillity": {
+      "post": {
+        "description": "Search beds availability based on department, hospital, bed ID, and other criteria.",
+        "requestBody": {
+          "description": "Search availability for beds.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterBedsPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Filtered list of beds",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BedWithDetails"
+                  }
+                }
+              }
             }
           },
           "400": {
