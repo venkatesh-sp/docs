@@ -20,9 +20,7 @@
   ],
   "security": [
     {
-      "bearerAuth": []
-    },
-    {
+      "bearerAuth": [],
       "x-api-key": []
     }
   ],
@@ -533,7 +531,7 @@
       },
       "x-api-key": {
         "type": "apiKey",
-        "name": "api-key-id",
+        "name": "x-api-key",
         "in": "header",
         "description": "Prefix the value with \"x-api-key\" to indicate the custom authorization type"
       }
